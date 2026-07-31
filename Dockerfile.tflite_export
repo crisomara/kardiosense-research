@@ -1,0 +1,23 @@
+# Separate pinned environment for 05_export_tflite.ipynb only.
+# Kept out of the main Dockerfile because TensorFlow + ONNX's CUDA/cuDNN
+# requirements conflict with the PyTorch image's pairing -- forcing both
+# stacks into one image risks silent, hard-to-debug version conflicts.
+FROM tensorflow/tensorflow:2.16.1
+
+WORKDIR /workspace
+
+RUN pip install --no-cache-dir \
+    jupyter==1.0.0 \
+    nbconvert==7.16.4 \
+    onnx==1.16.1 \
+    onnx-simplifier==0.4.36 \
+    onnx-tf==1.10.0 \
+    onnx2tf==1.22.3 \
+    onnxruntime==1.18.1 \
+    onnxscript==0.1.0.dev20240613 \
+    sng4onnx==1.0.4
+
+COPY notebooks/05_export_tflite.ipynb /workspace/notebooks/
+
+EXPOSE 8888
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]

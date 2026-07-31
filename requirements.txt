@@ -1,22 +1,29 @@
-# Unpinned — see REPRODUCING.md. These are the packages the notebooks install
-# beyond Colab's preinstalled scientific stack (numpy, pandas, scipy, torch,
-# scikit-learn, matplotlib, seaborn are already present in a standard Colab
-# runtime and were not re-pinned here).
-wfdb
-h5py
-neurokit2
-imbalanced-learn
-xgboost
-shap
-optuna
-pyreadstat
-seaborn
-google-cloud-bigquery
-onnx
-onnx-simplifier
-onnx-tf
-onnx2tf
-onnxruntime
-onnxscript
-sng4onnx
-tensorflow
+# Pinned as of the Dockerfile in this repo -- see DOCKER.md. These are new,
+# deliberate pins going forward; the original Colab runs had no captured
+# version pins (see REPRODUCING.md), so this is not a reconstruction of what
+# any individual notebook originally ran under.
+#
+# numpy, pandas, scipy, torch, scikit-learn, matplotlib, seaborn are already
+# present in a standard Colab runtime / the Docker base image and are not
+# re-pinned here except seaborn, which notebooks install explicitly.
+wfdb==4.1.2
+h5py==3.11.0
+neurokit2==0.2.9
+imbalanced-learn==0.12.3
+xgboost==2.0.3
+shap==0.45.1
+optuna==3.6.1
+pyreadstat==1.2.7
+seaborn==0.13.2
+google-cloud-bigquery==3.25.0
+
+# Only needed for 05_export_tflite.ipynb -- see Dockerfile.tflite_export,
+# kept separate from the core stack above due to CUDA/cuDNN conflicts.
+onnx==1.16.1
+onnx-simplifier==0.4.36
+onnx-tf==1.10.0
+onnx2tf==1.22.3
+onnxruntime==1.18.1
+onnxscript==0.1.0.dev20240613
+sng4onnx==1.0.4
+tensorflow==2.16.1

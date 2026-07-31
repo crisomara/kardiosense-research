@@ -1,0 +1,41 @@
+#!/bin/sh
+# Lightweight, dependency-free secret scan for staged changes.
+# This is a safety net, not a replacement for gitleaks (see
+# .pre-commit-config.yaml / .gitleaks.toml for the fuller scan) -- it exists
+# so protection works even before anyone has installed the pre-commit
+# framework. Enable with: git config core.hooksPath .githooks
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+found=0
+
+check() {
+    pattern="$1"
+    label="$2"
+    hits=$(echo "$staged" | xargs -I{} sh -c "git show :{} 2>/dev/null | grep -InE \"$pattern\" | sed 's/^/{}: /'" 2>/dev/null)
+    if [ -n "$hits" ]; then
+        echo "BLOCKED ($label):"
+        echo "$hits"
+        found=1
+    fi
+}
+
+# AWS access key IDs
+check 'AKIA[0-9A-Z]{16}' "AWS access key"
+# Generic private key blocks
+check '-----BEGIN (RSA|EC|OPENSSH|PGP|DSA) PRIVATE KEY-----' "private key block"
+# Assignments that look like a live secret, excluding known placeholders
+check '(api[_-]?key|secret|token|password)\s*[:=]\s*[\x27\"][A-Za-z0-9_\-]{16,}[\x27\"]' "hardcoded credential"
+# Real-looking email addresses (excludes common placeholder domains)
+check '[a-zA-Z0-9._%+-]+@(?!example\.com|test\.com)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' "email address"
+
+if [ "$found" = "1" ]; then
+    echo ""
+    echo "Commit blocked by .githooks/pre-commit. If this is a false positive"
+    echo "(e.g. a genuine placeholder), add it to .gitleaks.toml's allowlist"
+    echo "and re-run, or commit with --no-verify if you are certain."
+    exit 1
+fi
+
+exit 0
