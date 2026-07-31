@@ -29,6 +29,14 @@ This repository contains the model architecture, training/evaluation harnesses, 
 
 Notebooks default to `BASE_DIR = '/content/drive/MyDrive/KardioSenseAI'` for Colab+Drive use, overridable via the `KARDIOSENSE_BASE_DIR` environment variable. The MIMIC-IV notebook reads its BigQuery project from `KARDIOSENSE_GCP_PROJECT` (defaults to a placeholder — set this to your own PhysioNet-credentialed project).
 
+## Running with Docker
+
+See `DOCKER.md` for two pinned-environment images (core pipeline + a separate TFLite-export image) — this replaces "whatever Colab happens to have today" with an explicit, version-pinned environment. Read it before assuming a container run reproduces a result; it's honest about what pinning does and doesn't solve for Colab-authored notebooks.
+
+## Secret scanning
+
+`.gitleaks.toml` + `.pre-commit-config.yaml` configure [gitleaks](https://github.com/gitleaks/gitleaks) for anyone using the `pre-commit` framework. A dependency-free fallback also runs without any extra install: `git config core.hooksPath .githooks` enables `.githooks/pre-commit`, which blocks commits containing AWS keys, private-key blocks, hardcoded credential assignments, or real-looking email addresses.
+
 ## License
 
 Code: Apache License 2.0 (see `LICENSE`) — chosen over MIT specifically for its explicit patent grant.
