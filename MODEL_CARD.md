@@ -46,6 +46,10 @@ MI prevalence and AUC targets, per-notebook, are documented in each notebook's o
 - The African field ECG pilot notebook and any of its data or outputs — withheld pending institutional ethics/consent approval, independent of the open-source licensing question.
 - Pricing, business model, or investor material.
 
+## Citations
+
+See `REFERENCES.md` for full citations for every dataset used (PTB-XL, CODE-15%, NHANES, MIMIC-IV-ECG), the ISIBrno-AIMT comparison baseline and the PhysioNet/CinC Challenge 2021 it won, and the key software libraries this code depends on.
+
 ## Reporting standards
 
 This work is being prepared for reporting under TRIPOD+AI and PROBAST+AI. The architecture and evaluation code in this repository is published specifically to satisfy the full-transparency expectations of those standards.

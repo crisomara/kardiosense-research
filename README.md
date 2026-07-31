@@ -4,7 +4,7 @@ Open-source research code for lead-agnostic ECG + clinical-risk-factor fusion, t
 
 This repository contains the model architecture, training/evaluation harnesses, data-preprocessing code, and the ISIBrno-AIMT benchmark comparison pipeline referenced in the accompanying manuscript. See `MODEL_CARD.md` for intended use, training data provenance, and known limitations before using or citing any result here.
 
-**Before trying to reproduce a result:** read `REPRODUCING.md` (data access, run order, and what isn't pinned/guaranteed) and `BENCHMARK_PIPELINE.md` (why the six benchmark notebooks are separate, and in what order they depend on each other).
+**Before trying to reproduce a result:** read `REPRODUCING.md` (data access, run order, and what isn't pinned/guaranteed) and `BENCHMARK_PIPELINE.md` (why the six benchmark notebooks are separate, and in what order they depend on each other). See `REFERENCES.md` for citations for every dataset, the ISIBrno-AIMT comparison baseline, and the key software this code depends on.
 
 ## What's in `notebooks/`
 
