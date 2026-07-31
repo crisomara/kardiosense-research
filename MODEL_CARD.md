@@ -37,6 +37,7 @@ MI prevalence and AUC targets, per-notebook, are documented in each notebook's o
 - **MIMIC-IV external validation blocked:** `notebooks/02d_fusion_external_mimic.ipynb` documents an access-denied error (table-level BigQuery permission gap) rather than a completed validation. No claims in this repository or an associated manuscript should describe MIMIC-IV validation as complete.
 - **CODE-15% cross-country notebook (`notebooks/11`):** Recently had three data-pipeline bugs fixed (HDF5/exam_id index misalignment, an incorrect signal-scale assumption, and an incorrect label-remapping step) — see the inline comments in that notebook referencing the fix. The fix has been merged and reviewed against the notebook's own captured diagnostic output, but has not yet been re-run end-to-end against live data; treat its results as provisional until a full re-run is recorded.
 - **No confidence intervals yet:** AUCs throughout the notebook set are point estimates. Bootstrap confidence intervals are a planned addition, not yet implemented.
+- **Reproducibility:** no dependency versions are pinned, and fixed seeds do not guarantee bit-identical results across different hardware/library versions since several components (including the ISIBrno-AIMT baseline) are retrained from scratch rather than loaded from fixed weights. See `REPRODUCING.md` for the full run order and caveats before expecting exact numeric reproduction.
 
 ## What is not in this repository
 

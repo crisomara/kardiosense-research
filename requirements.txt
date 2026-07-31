@@ -1,0 +1,22 @@
+# Unpinned — see REPRODUCING.md. These are the packages the notebooks install
+# beyond Colab's preinstalled scientific stack (numpy, pandas, scipy, torch,
+# scikit-learn, matplotlib, seaborn are already present in a standard Colab
+# runtime and were not re-pinned here).
+wfdb
+h5py
+neurokit2
+imbalanced-learn
+xgboost
+shap
+optuna
+pyreadstat
+seaborn
+google-cloud-bigquery
+onnx
+onnx-simplifier
+onnx-tf
+onnx2tf
+onnxruntime
+onnxscript
+sng4onnx
+tensorflow
