@@ -1,0 +1,10 @@
+*.pt
+*.pkl
+*.h5
+*.npz
+*.csv
+checkpoints/
+datasets/
+.env
+.ipynb_checkpoints/
+__pycache__/
