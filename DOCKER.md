@@ -33,6 +33,12 @@ http://127.0.0.1:8888/tree?token=<token>
 ```
 Open that in a browser. You'll see `notebooks/` (all 13 public notebooks, read-only) and `data/` (your `-v` mount — `KARDIOSENSE_BASE_DIR` inside the container already points here).
 
+**Windows + Git Bash:** if you run the `docker run` command above from Git Bash (the default terminal that ships with Git for Windows), Git Bash's automatic path conversion can silently mangle the container-side half of the `-v` argument (`/workspace/data` gets rewritten as if it were a Windows path), producing a bind mount that looks like it worked but never actually shares files with the container. If your `data/` folder stays empty while the container is clearly writing files, prefix the command with `MSYS_NO_PATHCONV=1`:
+```bash
+MSYS_NO_PATHCONV=1 docker run -d --name kardiosense-research -p 8888:8888 -v "$(pwd)/data:/workspace/data" kardiosense-research
+```
+PowerShell, cmd.exe, macOS, and Linux shells are not affected by this.
+
 **When you're done:**
 ```bash
 docker stop kardiosense-research && docker rm kardiosense-research
@@ -57,6 +63,6 @@ This one has **not** been built or run — treat it the same way the core image 
 
 ## Verified
 
-The core image (`kardiosense-research`) has actually been built and run: the pinned base image resolved, every pinned package installed with no version conflicts, the container started, and the Jupyter server responded (HTTP 200) on `http://127.0.0.1:8888`. The Colab-mount guard above removes the previously-required manual edit, but actually executing a full notebook end-to-end inside the container (including the underlying data download and training run) has still not been recorded here — treat that as the next verification step, not as done.
+The core image (`kardiosense-research`) has been built and run, including inside the container itself: the pinned base image resolved, every pinned package installed with no version conflicts, the container started, and the Jupyter server responded (HTTP 200) on `http://127.0.0.1:8888`. With the `-v` bind mount working (see the Windows + Git Bash note above), a notebook's setup cell was executed inside the running container via `docker exec` — it correctly detected it was outside Colab, skipped the Drive mount without crashing, and built the `KARDIOSENSE_BASE_DIR` directory tree on the host through the volume mount, confirming the guard works in the actual pinned environment, not just on a bare host Python. What's still **not** verified: a full notebook run end-to-end inside the container — i.e. the actual data download, preprocessing, and training/evaluation cells beyond the setup cell — has not been recorded here; treat that as the next verification step.
 
 The TFLite export image is unverified — nobody has built it yet.
