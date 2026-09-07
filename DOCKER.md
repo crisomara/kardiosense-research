@@ -7,9 +7,10 @@ Two images, pinned deliberately (see `REPRODUCING.md` for why version pins were 
 **Prerequisite:** Docker Desktop installed and running (check the system tray — the engine has to actually be up, not just the app open).
 
 ```bash
-cd public
 docker build -t kardiosense-research .
 ```
+
+Run this from the repository root (the directory containing this file and `Dockerfile`).
 
 First build pulls the pinned `pytorch/pytorch:2.2.0-cuda12.1-cudnn8-runtime` base image (~3.6GB) and installs the pinned packages on top — expect roughly 8-10 minutes on a normal connection, almost all of it the base image download.
 
@@ -52,10 +53,10 @@ This one has **not** been built or run — treat it the same way the core image 
 
 **Fixes:** the OS/CUDA/cuDNN/Python-package version drift that comes from relying on "whatever Colab has today." Every package version in both images is pinned and will stay pinned unless someone deliberately bumps them.
 
-**Doesn't fix:** these notebooks were authored for Colab and their setup cells call `google.colab.drive.mount()` / `google.colab.auth()`, which don't exist outside Colab. Running a notebook inside the container still requires editing that one setup cell to skip the Colab-only mount/auth calls and just use `BASE_DIR` directly — nothing else about the notebooks' logic needs to change for this.
+**Doesn't fix:** these notebooks were authored for Colab, so their setup cells call `google.colab.drive.mount()` / `google.colab.auth()`. Those calls are now wrapped in a `try`/`except ImportError` in every notebook, so outside Colab (e.g. inside this container) they're skipped automatically and `BASE_DIR` (via `KARDIOSENSE_BASE_DIR`) is used as-is — no manual per-notebook editing needed for that part any more. What this does *not* fix: `02d_fusion_external_mimic.ipynb` still needs its own BigQuery authentication outside Colab (e.g. `gcloud auth application-default login`) and a PhysioNet-credentialed `KARDIOSENSE_GCP_PROJECT`, and every notebook still expects its input data (downloaded or pre-populated under `KARDIOSENSE_BASE_DIR`) and, for notebooks past 01/02, the checkpoints produced by earlier notebooks in the run order — see `REPRODUCING.md`.
 
 ## Verified
 
-The core image (`kardiosense-research`) has actually been built and run: the pinned base image resolved, every pinned package installed with no version conflicts, the container started, and the Jupyter server responded (HTTP 200) on `http://127.0.0.1:8888`. What was *not* verified: actually executing any notebook inside the container (the Colab-mount-cell edit above still needs doing first, by hand, per notebook).
+The core image (`kardiosense-research`) has actually been built and run: the pinned base image resolved, every pinned package installed with no version conflicts, the container started, and the Jupyter server responded (HTTP 200) on `http://127.0.0.1:8888`. The Colab-mount guard above removes the previously-required manual edit, but actually executing a full notebook end-to-end inside the container (including the underlying data download and training run) has still not been recorded here — treat that as the next verification step, not as done.
 
 The TFLite export image is unverified — nobody has built it yet.
