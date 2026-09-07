@@ -8,7 +8,7 @@ authors:
     affiliation: "[INSTITUTION]"
     orcid: "https://orcid.org/[ORCID ID]"
 license: Apache-2.0
-repository-code: "[REPOSITORY URL]"
+repository-code: "https://github.com/crisomara/kardiosense-research"
 keywords:
   - electrocardiogram
   - myocardial infarction
