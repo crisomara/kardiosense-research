@@ -3,12 +3,18 @@ message: "If you use this code, please cite this repository. A companion manuscr
 title: "KardioSense: Lead-Agnostic ECG + Clinical Fusion for Low-Resource MI Screening"
 type: software
 authors:
-  - family-names: "[FAMILY NAME]"
-    given-names: "[GIVEN NAME]"
-    affiliation: "[INSTITUTION]"
-    orcid: "https://orcid.org/[ORCID ID]"
+  - family-names: "Omara"
+    given-names: "Christian Kenneth"
+    affiliation: "Alliance for Medical Research in Africa (AMedRA)"
+    orcid: "https://orcid.org/0009-0009-3005-0512"
+  - family-names: "Ogwal"
+    given-names: "Emmanuel"
+    affiliation: "Alliance for Medical Research in Africa (AMedRA)"
+  - family-names: "Kamau"
+    given-names: "Patricia Wanjiru"
+    affiliation: "Alliance for Medical Research in Africa (AMedRA)"
 license: Apache-2.0
-repository-code: "[REPOSITORY URL]"
+repository-code: "https://github.com/crisomara/kardiosense-research"
 keywords:
   - electrocardiogram
   - myocardial infarction
