@@ -8,3 +8,7 @@ datasets/
 .env
 .ipynb_checkpoints/
 __pycache__/
+.coverage
+coverage.xml
+.pytest_cache/
+.ruff_cache/

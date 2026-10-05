@@ -1,5 +1,8 @@
 # KardioSense — Research Code
 
+[![CI](https://github.com/crisomara/kardiosense-research/actions/workflows/ci.yml/badge.svg)](https://github.com/crisomara/kardiosense-research/actions/workflows/ci.yml)
+[![Security](https://github.com/crisomara/kardiosense-research/actions/workflows/security.yml/badge.svg)](https://github.com/crisomara/kardiosense-research/actions/workflows/security.yml)
+
 Open-source research code for lead-agnostic ECG + clinical-risk-factor fusion, targeting myocardial infarction (MI) screening in low-resource settings.
 
 This repository contains the model architecture, training/evaluation harnesses, data-preprocessing code, and the ISIBrno-AIMT benchmark comparison pipeline referenced in the accompanying manuscript. See `MODEL_CARD.md` for intended use, training data provenance, and known limitations before using or citing any result here.
@@ -32,6 +35,24 @@ Notebooks default to `BASE_DIR = '/content/drive/MyDrive/KardioSenseAI'` for Col
 ## Running with Docker
 
 See `DOCKER.md` for two pinned-environment images (core pipeline + a separate TFLite-export image) — this replaces "whatever Colab happens to have today" with an explicit, version-pinned environment. Read it before assuming a container run reproduces a result; it's honest about what pinning does and doesn't solve for Colab-authored notebooks.
+
+## CI
+
+GitHub Actions runs on every push and pull request. No notebook is executed in CI (they need PhysioNet, Drive or BigQuery data and GPU training).
+
+- **CI** (`ci.yml`): ruff over the helper scripts, tests and notebooks (notebooks are held to correctness rules only: syntax errors and undefined names, see `ruff.toml`); `scripts/check_notebooks.py` validates every notebook against the nbformat schema, enforces a 5 MB per-notebook size budget and writes sizes and output counts to the job summary; pytest with coverage.
+- **Docker build** (`docker.yml`): builds both pinned images without pushing, only when a Dockerfile, `requirements.txt` or a notebook changes.
+- **Security** (`security.yml`, also weekly): gitleaks over the full history, pip-audit on the pinned requirements, CodeQL (Python), dependency review on pull requests, and actionlint on the workflows.
+- Dependabot opens grouped weekly updates for pip, Docker base images and GitHub Actions.
+
+Run the same checks locally:
+
+```bash
+pip install -r requirements-ci.txt
+ruff check . && ruff format --check scripts tests
+python scripts/check_notebooks.py
+pytest -q
+```
 
 ## Secret scanning
 
