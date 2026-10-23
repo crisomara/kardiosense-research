@@ -1,68 +1,82 @@
-# KardioSense — Research Code
+# KardioSense research code
 
 [![CI](https://github.com/crisomara/kardiosense-research/actions/workflows/ci.yml/badge.svg)](https://github.com/crisomara/kardiosense-research/actions/workflows/ci.yml)
 [![Security](https://github.com/crisomara/kardiosense-research/actions/workflows/security.yml/badge.svg)](https://github.com/crisomara/kardiosense-research/actions/workflows/security.yml)
 
-Open-source research code for lead-agnostic ECG + clinical-risk-factor fusion, targeting myocardial infarction (MI) screening in low-resource settings.
+Research code for lead-agnostic ECG and clinical risk-factor fusion, aimed at screening for myocardial infarction (MI) in low-resource settings. It is published so that researchers can inspect, run and test the methods, and so that the results reported for KardioSense can be checked.
 
-This repository contains the model architecture, training/evaluation harnesses, data-preprocessing code, and the ISIBrno-AIMT benchmark comparison pipeline referenced in the accompanying manuscript. See `MODEL_CARD.md` for intended use, training data provenance, and known limitations before using or citing any result here.
+The repository holds the model architecture, the training and evaluation code, the data preprocessing and the ISIBrno-AIMT benchmark comparison used in the accompanying manuscript. Read `MODEL_CARD.md` for intended use, training data and known limitations before using or citing any result here.
 
-**Before trying to reproduce a result:** read `REPRODUCING.md` (data access, run order, and what isn't pinned/guaranteed) and `BENCHMARK_PIPELINE.md` (why the six benchmark notebooks are separate, and in what order they depend on each other). See `REFERENCES.md` for citations for every dataset, the ISIBrno-AIMT comparison baseline, and the key software this code depends on.
+## Research use only
 
-## What's in `notebooks/`
+- This is research software. It is not a medical device and has not been validated for clinical use.
+- Do not use it, or any model trained with it, to diagnose or treat anyone, or to make decisions about a patient's care.
+- Trained model weights are not distributed in this repository.
+
+## Licence and permitted use
+
+The code is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+
+- You may use, run, change and share it for research, teaching and personal non-commercial purposes. Universities, public research institutes, charities, health organisations and government bodies may use it for any purpose that licence allows, whatever their source of funding.
+- Any commercial use needs written permission from KardioSense first. That includes using the code, or anything built from it, in a product or service, and any use by or for a company.
+- To ask for permission, contact KardioSense through the repository owner's GitHub profile: [github.com/crisomara](https://github.com/crisomara).
+- Earlier versions of this repository, up to commit `471deb3` on 22 October 2026, were published under the Apache License 2.0. Copies of those versions remain under that licence. This licence applies to all later versions.
+
+## Before you reproduce a result
+
+- `REPRODUCING.md`: data access, run order, and what is not pinned or guaranteed.
+- `BENCHMARK_PIPELINE.md`: why the six benchmark notebooks are separate, and the order they depend on each other.
+- `REFERENCES.md`: citations for every dataset, the ISIBrno-AIMT comparison baseline and the key software used.
+
+## What is in `notebooks/`
 
 | Notebook | Purpose |
 |---|---|
 | `01_ecg_baseline` | Single-lead PTB-XL baseline ResNet-1D |
 | `02_ecg_lead_agnostic` | Lead-masked training, 1- to 6-lead graceful degradation |
 | `02b_ecg_external_code15` | External validation on CODE-15% (Brazil) |
-| `02d_fusion_external_mimic` | MIMIC-IV external validation attempt (currently blocked — see Model Card) |
+| `02d_fusion_external_mimic` | MIMIC-IV external validation attempt (currently blocked, see the model card) |
 | `03_clinical_nhanes` | XGBoost clinical risk-factor branch (NHANES) |
-| `04_fusion_architecture` | Cross-attention ECG+clinical fusion (synthetic training data — see Model Card) |
+| `04_fusion_architecture` | Cross-attention ECG and clinical fusion (synthetic training data, see the model card) |
 | `05_export_tflite` | On-device TFLite export |
-| `06`–`11` | ISIBrno-AIMT head-to-head benchmark, Steps 1–5 (normalised eval, threshold sharing, lead ablation, cross-lead attention, 12-lead, CODE-15% cross-country) |
+| `06` to `11` | ISIBrno-AIMT head-to-head benchmark, steps 1 to 5: normalised evaluation, threshold sharing, lead ablation, cross-lead attention, 12-lead, CODE-15% cross-country |
 
-## What's deliberately not here
+## What is deliberately not here
 
-- **Trained weights.** Available on request under a signed research-use, non-commercial license — see `MODEL_CARD.md`.
-- **The African field ECG pilot notebook and data.** Withheld pending institutional ethics/consent approval.
-- **Production app / backend / business logic.** Kept in a separate, private repository.
+- **Trained weights.** Available on request under a signed research-use, non-commercial licence. See `MODEL_CARD.md`.
+- **Patient-level data.** No dataset, record or per-patient row is stored here. Every dataset is downloaded from its original source under that source's own terms (see `REPRODUCING.md`).
+- **The African field ECG pilot notebook and data.** Withheld pending institutional ethics and consent approval.
+- **The production app, backend and business logic.** Kept in a separate, private repository.
 
 ## Configuration
 
-Notebooks default to `BASE_DIR = '/content/drive/MyDrive/KardioSenseAI'` for Colab+Drive use, overridable via the `KARDIOSENSE_BASE_DIR` environment variable. The MIMIC-IV notebook reads its BigQuery project from `KARDIOSENSE_GCP_PROJECT` (defaults to a placeholder — set this to your own PhysioNet-credentialed project).
+The notebooks default to `BASE_DIR = '/content/drive/MyDrive/KardioSenseAI'` for Colab with Google Drive. Set the `KARDIOSENSE_BASE_DIR` environment variable to use another folder. The MIMIC-IV notebook reads its BigQuery project from `KARDIOSENSE_GCP_PROJECT`; set it to your own PhysioNet-credentialed project.
 
 ## Running with Docker
 
-See `DOCKER.md` for two pinned-environment images (core pipeline + a separate TFLite-export image) — this replaces "whatever Colab happens to have today" with an explicit, version-pinned environment. Read it before assuming a container run reproduces a result; it's honest about what pinning does and doesn't solve for Colab-authored notebooks.
+`DOCKER.md` describes two pinned images: the core pipeline (`Dockerfile`, packages from `requirements.txt`) and a separate TFLite export image (`Dockerfile.tflite_export`, packages from `requirements-export.txt`). They replace "whatever Colab has today" with an explicit, version-pinned environment. Read `DOCKER.md` before assuming a container run reproduces a result: it explains what pinning does and does not solve for notebooks written in Colab.
 
-## CI
+## Continuous integration
 
-GitHub Actions runs on every push and pull request. No notebook is executed in CI (they need PhysioNet, Drive or BigQuery data and GPU training).
+GitHub Actions runs on every push and pull request. No notebook is executed in CI, because they need PhysioNet, Drive or BigQuery data and GPU training.
 
-- **CI** (`ci.yml`): ruff over the helper scripts, tests and notebooks (notebooks are held to correctness rules only: syntax errors and undefined names, see `ruff.toml`); `scripts/check_notebooks.py` validates every notebook against the nbformat schema, enforces a 5 MB per-notebook size budget and writes sizes and output counts to the job summary; pytest with coverage.
-- **Docker build** (`docker.yml`): builds both pinned images without pushing, only when a Dockerfile, `requirements.txt` or a notebook changes.
-- **Security** (`security.yml`, also weekly): gitleaks over the full history, pip-audit on the pinned requirements, CodeQL (Python), dependency review on pull requests, and actionlint on the workflows.
+- **CI** (`ci.yml`): Ruff lint and format checks over the whole repository, including the notebooks (rules in `ruff.toml`); `scripts/check_notebooks.py`, which validates every notebook against the nbformat schema, enforces a 5 MB size budget per notebook and writes sizes and output counts to the job summary; pytest with coverage.
+- **Docker build** (`docker.yml`): builds both pinned images without pushing, only when a Dockerfile, a requirements file or a notebook changes.
+- **Security** (`security.yml`, also weekly): gitleaks over the full history, pip-audit on the pinned requirements (advisory only for the offline export toolchain), CodeQL for Python, dependency review on pull requests, and actionlint on the workflows.
 - Dependabot opens grouped weekly updates for pip, Docker base images and GitHub Actions.
 
 Run the same checks locally:
 
 ```bash
 pip install -r requirements-ci.txt
-ruff check . && ruff format --check scripts tests
+ruff check . && ruff format --check .
 python scripts/check_notebooks.py
 pytest -q
 ```
 
-## Secret scanning
+## Contributing and secret scanning
 
-`.gitleaks.toml` + `.pre-commit-config.yaml` configure [gitleaks](https://github.com/gitleaks/gitleaks) for anyone using the `pre-commit` framework. A dependency-free fallback also runs without any extra install: `git config core.hooksPath .githooks` enables `.githooks/pre-commit`, which blocks commits containing AWS keys, private-key blocks, hardcoded credential assignments, or real-looking email addresses.
-
-## License
-
-Code: Apache License 2.0 (see `LICENSE`) — chosen over MIT specifically for its explicit patent grant.
-
-Model weights, when released, are under a separate research-use license — not Apache 2.0. See `MODEL_CARD.md`.
+`.pre-commit-config.yaml` runs the same Ruff rules and formatting, basic file checks and [gitleaks](https://github.com/gitleaks/gitleaks) before each commit: `pip install pre-commit`, then `pre-commit install`. A fallback with no extra install is also available: `git config core.hooksPath .githooks` enables `.githooks/pre-commit`, which blocks commits containing AWS keys, private-key blocks, hardcoded credential assignments or real-looking email addresses.
 
 ## Citation
 

@@ -1,6 +1,6 @@
 # ISIBrno-AIMT Benchmark Pipeline (notebooks 06-11)
 
-These six notebooks are not six independent copies of the same experiment — they're
+These six notebooks are not six independent copies of the same experiment. They're
 a linear pipeline, each stage consuming artifacts the previous stage produced and
 answering a distinct question that maps to a specific part of the manuscript. That's
 why they're kept as separate notebooks rather than merged into one: TRIPOD+AI-style
@@ -22,12 +22,12 @@ definitions genuinely differ between steps rather than being copy-pasted filler.
 A quick check of the model class definitions (`ResBlock1D`, `AttentionPool`,
 `KardioSenseECGModel`, `ISIBrnoResidualBlock`, `ISIBrnoNN`) that appear in more than
 one of these notebooks found **3-4 distinct variants of each**, not one copy-pasted
-version — each notebook tests a different lead count, attention mechanism, or
+version: each notebook tests a different lead count, attention mechanism, or
 training configuration on purpose. Extracting these into one shared module would
 risk silently conflating configurations that are supposed to differ between
 benchmark steps. If you want a shared-utilities refactor anyway (e.g. to cut
 boilerplate like Drive mounting / package installs), that's safe to do, but each
-notebook would need to be re-run afterward to confirm nothing broke — that needs
+notebook would need to be re-run afterward to confirm nothing broke, and that needs
 an actual Colab session, which wasn't available for this pass.
 
 ## What was actually streamlined in this pass
@@ -36,5 +36,5 @@ an actual Colab session, which wasn't available for this pass.
   order is visible at a glance in a file listing, instead of the previous mixed
   `KardioSense_0N_...` / `KardioSense_0Na_...` scheme.
 - Notebook 11 had seven leftover ad hoc diagnostic/debug cells appended after its
-  own "Complete" marker (from the CODE-15% bug-hunting session) — removed, since
+  own "Complete" marker (from the CODE-15% bug-hunting session), removed since
   their findings are now properly integrated into the notebook's Sections 2/3/6.
