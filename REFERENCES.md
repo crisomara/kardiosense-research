@@ -15,7 +15,7 @@ Every dataset, comparison baseline, and challenge referenced by this codebase. S
 **NHANES** (notebook 03, clinical risk-factor branch)
 - Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS). National Health and Nutrition Examination Survey Data. Hyattsville, MD: U.S. Department of Health and Human Services, CDC.
 
-**MIMIC-IV-ECG** (notebook 02d, external validation attempt — see `MODEL_CARD.md` for its current access-blocked status)
+**MIMIC-IV-ECG** (notebook 02d, external validation attempt; see `MODEL_CARD.md` for its current access-blocked status)
 - Gow, B., Pollard, T., Nathanson, L. A., Johnson, A., Moody, B., Fernandes, C., Greenbaum, N., Waks, J. W., Eslami, P., Carbonati, T., Chaudhari, A., Herbst, E., Moukheiber, D., Berkowitz, S., Mark, R., & Horng, S. (2023). MIMIC-IV-ECG: Diagnostic Electrocardiogram Matched Subset (version 1.0). PhysioNet. https://doi.org/10.13026/4nqg-sb35
 
 **PhysioNet resource citation** (required alongside the above for PTB-XL and MIMIC-IV, both PhysioNet-hosted)
@@ -23,7 +23,7 @@ Every dataset, comparison baseline, and challenge referenced by this codebase. S
 
 ## Benchmark comparison baseline
 
-**ISIBrno-AIMT** (notebooks 06-11 — the model these benchmarks compare KardioSense against; architecture ported from their own `model_code.py`)
+**ISIBrno-AIMT** (notebooks 06-11: the model these benchmarks compare KardioSense against; architecture ported from their own `model_code.py`)
 - Nejedly, P., Ivora, A., Smisek, R., Viscor, I., Koscova, Z., Jurak, P., & Plesinger, F. (2021). Classification of ECG using ensemble of residual CNNs with attention mechanism. *2021 Computing in Cardiology (CinC)*, Brno, Czech Republic. IEEE. https://doi.org/10.23919/CinC53138.2021.9662723
 
 **PhysioNet/Computing in Cardiology Challenge 2021** (the challenge ISIBrno-AIMT won and this benchmark is framed against)
@@ -36,4 +36,4 @@ Every dataset, comparison baseline, and challenge referenced by this codebase. S
 - Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. *NeurIPS 2017*.
 - Pedregosa, F., et al. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825-2830.
 - Makowski, D., Pham, T., Lau, Z. J., Brammer, J. C., Lespinasse, F., Pham, H., Schölzel, C., & Chen, S. A. (2021). NeuroKit2: A Python toolbox for neurophysiological signal processing. *Behavior Research Methods*, 53(4), 1689-1696. https://doi.org/10.3758/s13428-020-01516-y
-- WFDB software package — cite via the PhysioNet resource citation above (Goldberger et al., 2000).
+- WFDB software package: cite via the PhysioNet resource citation above (Goldberger et al., 2000).
