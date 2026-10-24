@@ -71,7 +71,7 @@ Run the same checks locally:
 pip install -r requirements-ci.txt
 ruff check . && ruff format --check .
 python scripts/check_notebooks.py
-pytest -q
+python -m pytest -q
 ```
 
 ## Contributing and secret scanning
