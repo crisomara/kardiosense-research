@@ -55,6 +55,8 @@ docker run -p 8888:8888 kardiosense-tflite-export
 
 This one has **not** been built or run. Treat it the same way the core image was treated before it was verified (see below).
 
+The two images take their pins from separate files: the core image from `requirements.txt`, the export image from `requirements-export.txt`. Some export pins (onnx 1.16.1 and the tools built on it) have published security advisories. The onnx releases that fix them need protobuf 6 and a newer TensorFlow than this image's 2.16, so moving up means rebuilding the export path and checking the exported model again. Until that is done, CI audits `requirements-export.txt` as advisory only: the findings show in the Security workflow but do not fail it. The export image is an offline tool for converting a model you trained yourself, so only open ONNX files from sources you trust in it.
+
 ## What this does and doesn't fix
 
 **Fixes:** the OS/CUDA/cuDNN/Python-package version drift that comes from relying on "whatever Colab has today." Every package version in both images is pinned and will stay pinned unless someone deliberately bumps them.

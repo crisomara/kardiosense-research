@@ -9,6 +9,7 @@ on:
       - Dockerfile.tflite_export
       - .dockerignore
       - requirements.txt
+      - requirements-export.txt
       - notebooks/**
       - .github/workflows/docker.yml
   pull_request:
@@ -17,6 +18,7 @@ on:
       - Dockerfile.tflite_export
       - .dockerignore
       - requirements.txt
+      - requirements-export.txt
       - notebooks/**
       - .github/workflows/docker.yml
   workflow_dispatch:
