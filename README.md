@@ -76,7 +76,7 @@ pytest -q
 
 ## Contributing and secret scanning
 
-`.pre-commit-config.yaml` runs the same Ruff rules and formatting, basic file checks and [gitleaks](https://github.com/gitleaks/gitleaks) before each commit: `pip install pre-commit`, then `pre-commit install`. A fallback with no extra install is also available: `git config core.hooksPath .githooks` enables `.githooks/pre-commit`, which blocks commits containing AWS keys, private-key blocks, hardcoded credential assignments or real-looking email addresses.
+`CONTRIBUTING.md` sets out the code standard and what may never be committed (weights, data, per-record rows, secrets). `.pre-commit-config.yaml` runs the same Ruff rules and formatting, basic file checks and [gitleaks](https://github.com/gitleaks/gitleaks) before each commit: `pip install pre-commit`, then `pre-commit install`. A fallback with no extra install is also available: `git config core.hooksPath .githooks` enables `.githooks/pre-commit`, which blocks commits containing AWS keys, private-key blocks, hardcoded credential assignments or real-looking email addresses.
 
 ## Citation
 
