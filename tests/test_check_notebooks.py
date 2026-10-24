@@ -6,7 +6,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-import check_notebooks  # noqa: E402
+import check_notebooks
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -46,7 +46,9 @@ def test_oversized_notebook_fails(tmp_path):
 
 def test_schema_violation_fails(tmp_path):
     p = tmp_path / "bad.ipynb"
-    p.write_text('{"nbformat": 4, "nbformat_minor": 5, "metadata": {}, "cells": [{"cell_type": "code"}]}')
+    p.write_text(
+        '{"nbformat": 4, "nbformat_minor": 5, "metadata": {}, "cells": [{"cell_type": "code"}]}'
+    )
     r = check_notebooks.inspect_notebook(p, max_mb=5)
     assert r.problem and r.problem.startswith("invalid notebook")
 
@@ -64,7 +66,9 @@ def test_main_exit_codes(tmp_path, capsys):
     assert "| Notebook |" in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("nb_path", sorted((REPO_ROOT / "notebooks").glob("*.ipynb")), ids=lambda p: p.name)
+@pytest.mark.parametrize(
+    "nb_path", sorted((REPO_ROOT / "notebooks").glob("*.ipynb")), ids=lambda p: p.name
+)
 def test_committed_notebooks_are_valid(nb_path):
     r = check_notebooks.inspect_notebook(nb_path, max_mb=check_notebooks.DEFAULT_MAX_MB)
     assert r.problem is None, r.problem
