@@ -38,16 +38,10 @@ jobs:
           python-version: "3.11"
       - run: pip install pip-audit
       # Every entry in requirements.txt is pinned, so the pins are audited
-      # directly rather than resolving the full tree.
+      # directly. Resolving the full tree would mean downloading TensorFlow
+      # and the ONNX toolchain on every run.
       - run: pip-audit --requirement requirements.txt --no-deps --disable-pip --progress-spinner off
       - run: pip-audit --requirement requirements-ci.txt --progress-spinner off
-      # Advisory only: requirements-export.txt is the offline TFLite export
-      # toolchain, pinned to TensorFlow 2.16. The onnx fixes need protobuf 6
-      # and a newer TensorFlow, which means rebuilding the export path (see
-      # the comment in that file). Findings show here but do not fail CI.
-      - name: pip-audit (export toolchain, advisory)
-        continue-on-error: true
-        run: pip-audit --requirement requirements-export.txt --no-deps --disable-pip --progress-spinner off
 
   codeql:
     name: CodeQL (python)
