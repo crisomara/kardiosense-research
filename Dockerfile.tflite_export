@@ -2,7 +2,7 @@
 # Kept out of the main Dockerfile because TensorFlow + ONNX's CUDA/cuDNN
 # requirements conflict with the PyTorch image's pairing -- forcing both
 # stacks into one image risks silent, hard-to-debug version conflicts.
-FROM tensorflow/tensorflow:2.16.1
+FROM tensorflow/tensorflow:2.21.0
 
 WORKDIR /workspace
 

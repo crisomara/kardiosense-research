@@ -9,7 +9,7 @@
 # individual notebook originally ran under. If this exact tag is ever pulled
 # from Docker Hub, substitute any recent pytorch/pytorch:<ver>-cudaXX.X-cudnnN-runtime
 # tag -- the pinning discipline matters more than this specific version.
-FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-runtime
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
 
 WORKDIR /workspace
 
