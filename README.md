@@ -5,7 +5,7 @@
 
 Research code for lead-agnostic ECG and clinical risk-factor fusion, aimed at screening for myocardial infarction (MI) in low-resource settings. It is published so that researchers can inspect, run and test the methods, and so that the results reported for KardioSense can be checked.
 
-The repository holds the model architecture, the training and evaluation code, the data preprocessing and the ISIBrno-AIMT benchmark comparison used in the accompanying manuscript. Read `MODEL_CARD.md` for intended use, training data and known limitations before using or citing any result here.
+The repository holds the model architecture, the training and evaluation code and the data preprocessing used in the accompanying manuscript. Read `MODEL_CARD.md` for intended use, training data and known limitations before using or citing any result here.
 
 ## Research use only
 
@@ -19,14 +19,13 @@ The code is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
 - You may use, run, change and share it for research, teaching and personal non-commercial purposes. Universities, public research institutes, charities, health organisations and government bodies may use it for any purpose that licence allows, whatever their source of funding.
 - Any commercial use needs written permission from KardioSense first. That includes using the code, or anything built from it, in a product or service, and any use by or for a company.
-- To ask for permission, contact KardioSense through the repository owner's GitHub profile: [github.com/crisomara](https://github.com/crisomara).
-- Earlier versions of this repository, up to commit `471deb3` on 22 October 2026, were published under the Apache License 2.0. Copies of those versions remain under that licence. This licence applies to all later versions.
+- To ask for permission, contact KardioSense at [mail.cardiosense@gmail.com](mailto:mail.cardiosense@gmail.com).
+- Versions of this repository whose `LICENSE` file is the Apache License 2.0, including every version published before 25 October 2026, remain under that licence for anyone who received them. Versions whose `LICENSE` file is the PolyForm Noncommercial License 1.0.0 are under that licence.
 
 ## Before you reproduce a result
 
 - `REPRODUCING.md`: data access, run order, and what is not pinned or guaranteed.
-- `BENCHMARK_PIPELINE.md`: why the six benchmark notebooks are separate, and the order they depend on each other.
-- `REFERENCES.md`: citations for every dataset, the ISIBrno-AIMT comparison baseline and the key software used.
+- `REFERENCES.md`: citations for every dataset and the key software used.
 
 ## What is in `notebooks/`
 
@@ -39,7 +38,6 @@ The code is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 | `03_clinical_nhanes` | XGBoost clinical risk-factor branch (NHANES) |
 | `04_fusion_architecture` | Cross-attention ECG and clinical fusion (synthetic training data, see the model card) |
 | `05_export_tflite` | On-device TFLite export |
-| `06` to `11` | ISIBrno-AIMT head-to-head benchmark, steps 1 to 5: normalised evaluation, threshold sharing, lead ablation, cross-lead attention, 12-lead, CODE-15% cross-country |
 
 ## What is deliberately not here
 
