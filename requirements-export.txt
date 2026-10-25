@@ -8,11 +8,11 @@
 # and those need protobuf 6 and a newer TensorFlow: moving up means
 # rebuilding the export path (onnx2tf 2.x, no onnx-tf) and checking the
 # exported model again. CI audits this file as advisory only.
-onnx==1.16.1
-onnx-simplifier==0.4.36
+onnx==1.23.2
+onnx-simplifier==0.5.0
 onnx-tf==1.10.0
 onnx2tf==1.22.3
-onnxruntime==1.18.1
-onnxscript==0.1.0.dev20240613
+onnxruntime==1.31.0
+onnxscript==0.7.3.dev20261007
 sng4onnx==1.0.4
-tensorflow==2.16.1
+tensorflow==2.21.0
