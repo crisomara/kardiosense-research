@@ -1,5 +1,5 @@
 # Pinned environment for the core PyTorch-based pipeline: notebooks 01, 02,
-# 02b, 02d, 03, 04, 06-11. Does NOT cover 05_export_tflite.ipynb, which needs
+# 02b, 02d, 03, 04. Does NOT cover 05_export_tflite.ipynb, which needs
 # TensorFlow/ONNX and would conflict with this image's CUDA/cuDNN pairing --
 # see Dockerfile.tflite_export for that one instead.
 #

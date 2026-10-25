@@ -1,18 +1,17 @@
 # Separate pinned environment for 05_export_tflite.ipynb only.
-# Kept out of the main Dockerfile because TensorFlow + ONNX's CUDA/cuDNN
-# requirements conflict with the PyTorch image's pairing -- forcing both
+# Kept out of the main Dockerfile because TensorFlow's CUDA/cuDNN
+# requirements conflict with the PyTorch image's pairing, and forcing both
 # stacks into one image risks silent, hard-to-debug version conflicts.
-FROM tensorflow/tensorflow:2.16.1
+FROM python:3.12.15-slim-bookworm
 
 WORKDIR /workspace
 
-# Pinned in requirements-export.txt; tensorflow==2.16.1 there matches this
-# base image, so pip leaves it as it is.
+# All pins are in requirements-export.txt. torch comes from the PyTorch CPU
+# index first, so the export image carries no CUDA libraries; the torch pin
+# in requirements-export.txt is then already satisfied.
 COPY requirements-export.txt /tmp/requirements-export.txt
-RUN pip install --no-cache-dir \
-    jupyter==1.0.0 \
-    nbconvert==7.16.4 \
-    -r /tmp/requirements-export.txt
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.14.1 \
+    && pip install --no-cache-dir -r /tmp/requirements-export.txt
 
 COPY notebooks/05_export_tflite.ipynb /workspace/notebooks/
 

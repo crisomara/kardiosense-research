@@ -1,18 +1,26 @@
-# Pins for 05_export_tflite.ipynb only, installed by Dockerfile.tflite_export
-# on top of the tensorflow/tensorflow:2.16.1 base image. Kept apart from
-# requirements.txt because the TensorFlow and ONNX stack conflicts with the
-# PyTorch image's CUDA/cuDNN pairing (see DOCKER.md).
+# Pins for 05_export_tflite.ipynb, installed by Dockerfile.tflite_export on
+# python:3.12-slim. Kept apart from requirements.txt because TensorFlow and
+# the PyTorch image's CUDA/cuDNN pairing conflict (see DOCKER.md).
 #
-# This is an offline export toolchain, pinned to TensorFlow 2.16. Some of
-# these pins have published advisories that only newer onnx releases fix,
-# and those need protobuf 6 and a newer TensorFlow: moving up means
-# rebuilding the export path (onnx2tf 2.x, no onnx-tf) and checking the
-# exported model again. CI audits this file as advisory only.
-onnx==1.16.1
-onnx-simplifier==0.4.36
-onnx-tf==1.10.0
-onnx2tf==1.22.3
-onnxruntime==1.18.1
-onnxscript==0.1.0.dev20240613
-sng4onnx==1.0.4
-tensorflow==2.16.1
+# These cover the export the notebook ships: the PyTorch model, its ONNX
+# export and onnxruntime check (sections 1 to 4) and the native Keras and
+# TFLite export (section 10). The onnx2tf cells in between (sections 5 to 9,
+# the path section 10 replaced) also need onnx2tf, sng4onnx and onnxsim.
+# They are left out on purpose: onnx2tf 2.x requires onnx 1.20.1, which has
+# open security advisories. Install them in a throwaway environment if you
+# want to rerun that part.
+tensorflow==2.21.0
+keras==3.15.1
+h5py==3.14.0  # tensorflow 2.21 needs h5py older than 3.15
+# CPU build, installed from the PyTorch CPU index first (Dockerfile.tflite_export)
+torch==2.14.1
+onnx==1.23.2
+onnxruntime==1.31.0
+onnxscript==0.7.2
+numpy==2.3.5
+pandas==2.3.3
+scikit-learn==1.9.1
+matplotlib==3.11.2
+jupyter==1.1.1
+notebook==7.6.3
+nbconvert==7.17.2
