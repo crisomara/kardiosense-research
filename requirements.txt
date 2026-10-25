@@ -13,7 +13,7 @@ neurokit2==0.2.9
 imbalanced-learn==0.12.3
 xgboost==2.0.3
 shap==0.45.1
-optuna==3.6.1
+optuna==5.0.0
 pyreadstat==1.2.7
 seaborn==0.13.2
 google-cloud-bigquery==3.25.0
