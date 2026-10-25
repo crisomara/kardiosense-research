@@ -11,7 +11,7 @@
 onnx==1.16.1
 onnx-simplifier==0.4.36
 onnx-tf==1.10.0
-onnx2tf==1.22.3
+onnx2tf==2.6.9
 onnxruntime==1.18.1
 onnxscript==0.1.0.dev20240613
 sng4onnx==1.0.4
