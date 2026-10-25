@@ -11,4 +11,6 @@ regexes = [
   '''your-gcp-project-id''',
   '''PHYSIONET_USER''',
   '''PHYSIONET_PASS''',
+  # PyTorch's MultiheadAttention argument, not a key.
+  '''key_padding_mask=key_pad''',
 ]
