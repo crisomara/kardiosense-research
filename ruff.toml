@@ -1,0 +1,44 @@
+# KardioSense Python standard, the same rules as the other KardioSense
+# repositories. See CONTRIBUTING.md.
+#
+# The commit hooks apply it, with fixes, to every Python file and notebook
+# you commit, and CI checks the whole repository against it
+# (.github/workflows/ci.yml). Ruff only reads and rewrites the code cells of
+# a notebook; stored outputs are never changed.
+
+# Python 3.10, not 3.11: the core Docker image (pytorch/pytorch:2.2.0) runs
+# Python 3.10, so the code must not use newer syntax.
+target-version = "py310"
+line-length = 100
+extend-include = ["*.ipynb"]
+
+[lint]
+select = [
+    "E",      # pycodestyle errors, including two statements on one line
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes: undefined names, unused imports and variables
+    "I",      # import order
+    "B",      # bugbear: likely bugs
+    "UP",     # modern syntax for the target Python
+    "S",      # bandit: security
+    "C4",     # simpler comprehensions
+    "RUF100", # unused noqa comments
+]
+ignore = [
+    "E501", # line length: the formatter wraps code; long strings are allowed
+    "C408", # dict(a=1) instead of {"a": 1} is fine
+]
+
+[lint.per-file-ignores]
+# Tests: plain asserts, fixed test values, temporary paths and subprocesses.
+"tests/**" = ["S101", "S105", "S106", "S108", "S311", "S603", "S607"]
+# A notebook stops on a failed assert on purpose: each one checks a shape,
+# a split or a file before hours of training build on it.
+"*.ipynb" = ["S101"]
+# The benchmark notebooks port the ISIBrno-AIMT reference code and keep its
+# names, such as l for the lead indicator in forward(x, l), so the port can
+# be read side by side with the original.
+"notebooks/{06,07,08,09,10,11}_*.ipynb" = ["E741"]
+
+[format]
+quote-style = "double"

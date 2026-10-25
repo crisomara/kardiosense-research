@@ -8,3 +8,21 @@ datasets/
 .env
 .ipynb_checkpoints/
 __pycache__/
+.coverage
+coverage.xml
+.pytest_cache/
+.ruff_cache/
+
+# Trained weights and exported models are never published here.
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.tflite
+*.pb
+*.keras
+*.hdf5
+*.joblib
+*.npy
+*.parquet
+tf_saved_model/
