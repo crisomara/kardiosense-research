@@ -6,13 +6,16 @@ FROM tensorflow/tensorflow:2.16.1
 
 WORKDIR /workspace
 
-# Pinned in requirements-export.txt; tensorflow==2.16.1 there matches this
-# base image, so pip leaves it as it is.
-COPY requirements-export.txt /tmp/requirements-export.txt
 RUN pip install --no-cache-dir \
     jupyter==1.0.0 \
     nbconvert==7.16.4 \
-    -r /tmp/requirements-export.txt
+    onnx==1.16.1 \
+    onnx-simplifier==0.4.36 \
+    onnx-tf==1.10.0 \
+    onnx2tf==1.22.3 \
+    onnxruntime==1.18.1 \
+    onnxscript==0.1.0.dev20240613 \
+    sng4onnx==1.0.4
 
 COPY notebooks/05_export_tflite.ipynb /workspace/notebooks/
 
