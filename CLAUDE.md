@@ -10,7 +10,7 @@ Public, research-only code (PolyForm Noncommercial 1.0.0) so that outside resear
 
 - Model weights or exported models, datasets, or records.
 - Any per-record patient or participant row, including in notebook outputs.
-- Keys, passwords, tokens, email addresses or local paths.
+- Keys, passwords, tokens, email addresses (other than the public contact in `README.md`) or local paths.
 
 ## Writing code
 

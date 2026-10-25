@@ -11,7 +11,7 @@ What never belongs here:
 
 - Trained model weights or exported models (`.pt`, `.onnx`, `.tflite` and similar).
 - Datasets, records, or any row about an individual patient or participant, including in notebook outputs.
-- Keys, passwords, tokens, email addresses or paths from your own machine.
+- Keys, passwords, tokens, email addresses (other than the public contact in `README.md`) or paths from your own machine.
 
 The commit hooks and CI stop the most common cases, but you are responsible for what you commit. Clear a notebook's outputs before committing it if they show individual records.
 

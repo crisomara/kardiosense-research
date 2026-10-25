@@ -14,7 +14,7 @@ Following the reporting structure recommended by MI-CLAIM (Minimum Information A
 - **Clinical branch:** XGBoost gradient-boosted trees over standard cardiovascular risk factors (age, sex, BP, BMI, smoking, lipids, HbA1c where available).
 - **Fusion:** Cross-attention gate combining the 256-dim ECG embedding with the clinical branch's output.
 
-Full architecture code, training harness, and the ISIBrno-AIMT benchmark comparison pipeline are in `notebooks/`. Only the trained weights are withheld (see "What is not in this repository" below).
+Full architecture code and the training and evaluation harness are in `notebooks/`. Only the trained weights are withheld (see "What is not in this repository" below).
 
 ## Training data provenance
 
@@ -30,14 +30,12 @@ MI prevalence and AUC targets, per-notebook, are documented in each notebook's o
 
 ## Known failure modes and limitations
 
-- **AFib internal/external discrepancy:** A small internal test sample (2–15 AFib cases) produces a saturated AUC (1.000) for both KardioSense and the ISIBrno-AIMT baseline alike. This is a small-sample artefact, not evidence of leakage, but it means the internal AFib number should not be read as a stable estimate. The external (CODE-15%) AFib AUC is the more reliable estimate of real-world performance.
+- **AFib internal/external discrepancy:** A small internal test sample (2–15 AFib cases) produces a saturated AUC (1.000). This is a small-sample artefact, not evidence of leakage, but it means the internal AFib number should not be read as a stable estimate. The external (CODE-15%) AFib AUC is the more reliable estimate of real-world performance.
 - **STTC external validation:** Fails its target AUC on CODE-15% external validation. This is reported, not hidden.
-- **ISIBrno-AIMT comparison training asymmetry:** The head-to-head benchmark (`notebooks/06`–`11`) uses augmentation strategies that differ between the two models in ways documented in each notebook; at native 12-lead input, ISIBrno-AIMT outperforms KardioSense. A masking-matched re-run is a recommended future step, not yet done.
 - **Fusion model trained on synthetic data:** The ECG+clinical fusion gate (`notebooks/04_fusion_architecture.ipynb`) is trained on synthetically paired ECG/clinical records, printed explicitly in that notebook's own output. It has not yet been validated on genuinely paired real-world ECG and clinical data; see the MIMIC-IV status below.
 - **MIMIC-IV external validation blocked:** `notebooks/02d_fusion_external_mimic.ipynb` documents an access-denied error (table-level BigQuery permission gap) rather than a completed validation. No claims in this repository or an associated manuscript should describe MIMIC-IV validation as complete.
-- **CODE-15% cross-country notebook (`notebooks/11`):** Recently had three data-pipeline bugs fixed (HDF5/exam_id index misalignment, an incorrect signal-scale assumption, and an incorrect label-remapping step). See the inline comments in that notebook referencing the fix. The fix has been merged and reviewed against the notebook's own captured diagnostic output, but has not yet been re-run end-to-end against live data; treat its results as provisional until a full re-run is recorded.
 - **No confidence intervals yet:** AUCs throughout the notebook set are point estimates. Bootstrap confidence intervals are a planned addition, not yet implemented.
-- **Reproducibility:** no dependency versions are pinned, and fixed seeds do not guarantee bit-identical results across different hardware/library versions since several components (including the ISIBrno-AIMT baseline) are retrained from scratch rather than loaded from fixed weights. See `REPRODUCING.md` for the full run order and caveats before expecting exact numeric reproduction.
+- **Reproducibility:** the notebooks do not pin their package versions in Colab (the Docker images do, see `DOCKER.md`), and fixed seeds do not guarantee bit-identical results across different hardware/library versions since several components are retrained from scratch rather than loaded from fixed weights. See `REPRODUCING.md` for the full run order and caveats before expecting exact numeric reproduction.
 
 ## What is not in this repository
 
@@ -48,7 +46,7 @@ MI prevalence and AUC targets, per-notebook, are documented in each notebook's o
 
 ## Citations
 
-See `REFERENCES.md` for full citations for every dataset used (PTB-XL, CODE-15%, NHANES, MIMIC-IV-ECG), the ISIBrno-AIMT comparison baseline and the PhysioNet/CinC Challenge 2021 it won, and the key software libraries this code depends on.
+See `REFERENCES.md` for full citations for every dataset used (PTB-XL, CODE-15%, NHANES, MIMIC-IV-ECG) and the key software libraries this code depends on.
 
 ## Reporting standards
 

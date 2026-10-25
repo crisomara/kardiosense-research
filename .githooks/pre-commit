@@ -30,8 +30,9 @@ check 'AKIA[0-9A-Z]{16}' "AWS access key"
 check '-----BEGIN (RSA|EC|OPENSSH|PGP|DSA) PRIVATE KEY-----' "private key block"
 # Assignments that look like a live secret, excluding known placeholders
 check '(api[_-]?key|secret|token|password)\s*[:=]\s*[\x27\"][A-Za-z0-9_\-]{16,}[\x27\"]' "hardcoded credential"
-# Real-looking email addresses (excludes common placeholder domains)
-check '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' "email address" '@(example|test)\.com'
+# Real-looking email addresses (excludes placeholder domains and the public
+# commercial-permission contact in README.md)
+check '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' "email address" '@(example|test)\.com|mail\.cardiosense@gmail\.com'
 
 if [ "$found" = "1" ]; then
     echo ""
