@@ -1,0 +1,18 @@
+# Pins for 05_export_tflite.ipynb only, installed by Dockerfile.tflite_export
+# on top of the tensorflow/tensorflow:2.16.1 base image. Kept apart from
+# requirements.txt because the TensorFlow and ONNX stack conflicts with the
+# PyTorch image's CUDA/cuDNN pairing (see DOCKER.md).
+#
+# This is an offline export toolchain, pinned to TensorFlow 2.16. Some of
+# these pins have published advisories that only newer onnx releases fix,
+# and those need protobuf 6 and a newer TensorFlow: moving up means
+# rebuilding the export path (onnx2tf 2.x, no onnx-tf) and checking the
+# exported model again. CI audits this file as advisory only.
+onnx==1.16.1
+onnx-simplifier==0.4.36
+onnx-tf==1.10.0
+onnx2tf==1.22.3
+onnxruntime==1.18.1
+onnxscript==0.1.0.dev20240613
+sng4onnx==1.0.4
+tensorflow==2.16.1
