@@ -1,0 +1,51 @@
+name: Docker build
+
+# Builds both pinned research images (without pushing). The base images are
+# several GB, so this only runs when something that goes into an image changes.
+on:
+  push:
+    paths:
+      - Dockerfile
+      - Dockerfile.tflite_export
+      - .dockerignore
+      - requirements.txt
+      - requirements-export.txt
+      - notebooks/**
+      - .github/workflows/docker.yml
+  pull_request:
+    paths:
+      - Dockerfile
+      - Dockerfile.tflite_export
+      - .dockerignore
+      - requirements.txt
+      - requirements-export.txt
+      - notebooks/**
+      - .github/workflows/docker.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: docker build ${{ matrix.dockerfile }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        dockerfile: [Dockerfile, Dockerfile.tflite_export]
+    steps:
+      - uses: actions/checkout@v4
+      # The PyTorch CUDA runtime base image unpacks to ~8 GB; drop unused
+      # preinstalled toolchains so the runner does not run out of disk.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+      - name: Build image
+        run: docker build --file "${{ matrix.dockerfile }}" --tag "kardiosense-research-ci:${{ github.sha }}" .

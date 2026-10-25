@@ -17,21 +17,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Pinned as of this Dockerfile's creation -- bump deliberately, not silently.
+# Pinned in requirements.txt (bump deliberately, not silently), plus the
+# notebook tooling.
+COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir \
     jupyter==1.0.0 \
     nbconvert==7.16.4 \
     papermill==2.6.0 \
-    wfdb==4.1.2 \
-    h5py==3.11.0 \
-    neurokit2==0.2.9 \
-    imbalanced-learn==0.12.3 \
-    xgboost==2.0.3 \
-    shap==0.45.1 \
-    optuna==3.6.1 \
-    pyreadstat==1.2.7 \
-    seaborn==0.13.2 \
-    google-cloud-bigquery==3.25.0
+    -r /tmp/requirements.txt
 
 COPY notebooks/ /workspace/notebooks/
 
