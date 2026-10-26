@@ -13,7 +13,10 @@ authors:
   - family-names: "Kamau"
     given-names: "Patricia Wanjiru"
     affiliation: "Alliance for Medical Research in Africa (AMedRA)"
-license: Apache-2.0
+license: PolyForm-Noncommercial-1.0.0
+contact:
+  - name: "KardioSense"
+    email: "mail.cardiosense@gmail.com"
 repository-code: "https://github.com/crisomara/kardiosense-research"
 keywords:
   - electrocardiogram

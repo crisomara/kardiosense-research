@@ -10,10 +10,13 @@ staged=$(git diff --cached --name-only --diff-filter=ACM)
 
 found=0
 
+# check PATTERN LABEL [EXCLUDE]: EXCLUDE drops matching hits (grep -E has
+# no lookahead, so exceptions are filtered afterwards).
 check() {
     pattern="$1"
     label="$2"
-    hits=$(echo "$staged" | xargs -I{} sh -c "git show :{} 2>/dev/null | grep -InE \"$pattern\" | sed 's/^/{}: /'" 2>/dev/null)
+    exclude="${3:-^$}"
+    hits=$(echo "$staged" | xargs -I{} sh -c "git show :{} 2>/dev/null | grep -InE \"$pattern\" | sed 's/^/{}: /'" 2>/dev/null | grep -vE "$exclude")
     if [ -n "$hits" ]; then
         echo "BLOCKED ($label):"
         echo "$hits"
@@ -27,8 +30,9 @@ check 'AKIA[0-9A-Z]{16}' "AWS access key"
 check '-----BEGIN (RSA|EC|OPENSSH|PGP|DSA) PRIVATE KEY-----' "private key block"
 # Assignments that look like a live secret, excluding known placeholders
 check '(api[_-]?key|secret|token|password)\s*[:=]\s*[\x27\"][A-Za-z0-9_\-]{16,}[\x27\"]' "hardcoded credential"
-# Real-looking email addresses (excludes common placeholder domains)
-check '[a-zA-Z0-9._%+-]+@(?!example\.com|test\.com)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' "email address"
+# Real-looking email addresses (excludes placeholder domains and the public
+# commercial-permission contact in README.md)
+check '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' "email address" '@(example|test)\.com|mail\.cardiosense@gmail\.com'
 
 if [ "$found" = "1" ]; then
     echo ""

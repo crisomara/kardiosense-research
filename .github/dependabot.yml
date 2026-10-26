@@ -8,6 +8,20 @@ updates:
     groups:
       pip-minor-patch:
         update-types: [minor, patch]
+    # The model stack is upgraded by hand, never by Dependabot: a new version
+    # of these can change the numbers the notebooks report (xgboost 3, for
+    # one, changes the probabilities a saved 2.x model returns). Move them in
+    # a pull request that reruns the affected notebooks and records the
+    # versions, then update the pins.
+    ignore:
+      - dependency-name: torch
+      - dependency-name: numpy
+      - dependency-name: scipy
+      - dependency-name: scikit-learn
+      - dependency-name: xgboost
+      - dependency-name: shap
+      - dependency-name: optuna
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: docker
     directory: /
@@ -17,6 +31,10 @@ updates:
     groups:
       docker-minor-patch:
         update-types: [minor, patch]
+    # The core image's PyTorch version is its base image tag, so it is part of
+    # the model stack above and is moved by hand too.
+    ignore:
+      - dependency-name: pytorch/pytorch
 
   - package-ecosystem: github-actions
     directory: /
