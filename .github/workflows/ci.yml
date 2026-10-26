@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Ruff (helpers + notebooks)
+    name: Ruff and repository contents
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -24,11 +24,19 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-ci.txt
       - run: pip install -r requirements-ci.txt
-      # Notebooks are held to correctness rules only (see ruff.toml).
+      # The whole repository, notebooks included (see ruff.toml).
       - name: Ruff lint
         run: ruff check --output-format=github .
-      - name: Ruff format (helper scripts and tests)
-        run: ruff format --check scripts tests
+      - name: Ruff format
+        run: ruff format --check .
+      # Trained weights and datasets are never published here (README.md).
+      - name: No model weights or data files
+        run: |
+          pattern='\.(pt|pth|ckpt|safetensors|onnx|tflite|pb|keras|h5|hdf5|pkl|joblib|npz|npy|parquet|csv|edf|dat|hea|mat)$'
+          if git ls-files | grep -iE "$pattern"; then
+            echo "::error::Model weights or data files are tracked (listed above)."
+            exit 1
+          fi
 
   notebooks:
     name: Notebook validation (no execution)
@@ -60,7 +68,7 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-ci.txt
       - run: pip install -r requirements-ci.txt
-      - run: pytest -q --cov=scripts --cov-report=xml --cov-report=term
+      - run: python -m pytest -q --cov=scripts --cov-report=xml --cov-report=term
       - uses: actions/upload-artifact@v4
         if: always()
         with:
