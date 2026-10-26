@@ -11,7 +11,7 @@
 # want to rerun that part.
 tensorflow==2.21.0
 keras==3.15.1
-h5py==3.14.0  # tensorflow 2.21 needs h5py older than 3.15
+h5py==3.16.0  # tensorflow 2.21 needs h5py older than 3.15
 # CPU build, installed from the PyTorch CPU index first (Dockerfile.tflite_export)
 torch==2.14.1
 onnx==1.23.2
