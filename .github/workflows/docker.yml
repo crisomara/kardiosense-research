@@ -40,7 +40,7 @@ jobs:
       matrix:
         dockerfile: [Dockerfile, Dockerfile.tflite_export]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # The PyTorch CUDA runtime base image unpacks to ~8 GB; drop unused
       # preinstalled toolchains so the runner does not run out of disk.
       - name: Free disk space
