@@ -2,7 +2,7 @@
 # Kept out of the main Dockerfile because TensorFlow's CUDA/cuDNN
 # requirements conflict with the PyTorch image's pairing, and forcing both
 # stacks into one image risks silent, hard-to-debug version conflicts.
-FROM python:3.12.15-slim-bookworm
+FROM python:3.14.9-slim-bookworm
 
 WORKDIR /workspace
 
