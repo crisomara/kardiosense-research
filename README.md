@@ -18,8 +18,8 @@ The repository holds the model architecture, the training and evaluation code an
 The code is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
 - You may use, run, change and share it for research, teaching and personal non-commercial purposes. Universities, public research institutes, charities, health organisations and government bodies may use it for any purpose that licence allows, whatever their source of funding.
-- Any commercial use needs written permission from KardioSense first. That includes using the code, or anything built from it, in a product or service, and any use by or for a company.
-- To ask for permission, contact KardioSense at [mail.cardiosense@gmail.com](mailto:mail.cardiosense@gmail.com).
+- Any commercial use needs written permission from Kardiasense Health Technologies first. That includes using the code, or anything built from it, in a product or service, and any use by or for a company.
+- To ask for permission, contact Kardiasense Health Technologies at [mail.cardiosense@gmail.com](mailto:mail.cardiosense@gmail.com).
 - Versions of this repository whose `LICENSE` file is the Apache License 2.0, including every version published before 25 October 2026, remain under that licence for anyone who received them. Versions whose `LICENSE` file is the PolyForm Noncommercial License 1.0.0 are under that licence.
 
 ## Before you reproduce a result
